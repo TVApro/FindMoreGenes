@@ -22,15 +22,21 @@ Short script to find all required genes in all required genomes
 If your want to download all representative genomes of target genus, you should change line 12 or 14:
 
 12: ncbi-genome-download -s refseq -R 'representative' -F 'genbank,protein-fasta' -g 'YOURGENUS' -o ncbi_output 'archaea/bacteria/fungi/viruses (Choose one)' 
+
 14: ncbi-genome-download -s refseq -F 'genbank,protein-fasta' -g 'YOURGENUS' -S 'YOURSTRAIN' -o ncbi_output 'archaea/bacteria/fungi/viruses (Choose one)'
 
 example in the script: 
+
 '# download all representative genomes
+
 ncbi-genome-download -s refseq -R 'representative' -F 'genbank,protein-fasta' -g 'Methanothermobacter' -o ncbi_output 'archaea'
+
 '# download target genome
+
 ncbi-genome-download -s refseq -F 'genbank,protein-fasta' -g 'Methanothermobacter' -S 'K4' -o ncbi_output 'archaea'
 
 Your must have a file with target amino-acide sequences in FASTA format (I strongly recomend using UniProt https://www.uniprot.org/ to create large unified lists).
+
 The name of the sequence file is specified when running the script with the terminal. Example:
 
 bash ./FindMore.sh TARGET.fasta, where TARGET.fasta is name of file
@@ -38,9 +44,12 @@ bash ./FindMore.sh TARGET.fasta, where TARGET.fasta is name of file
 Lines 233 and 234 contain an additional command that can filter all results except the target one. It is enough to uncomment these lines and keep the name of the required organism:
 
 233:# if df.loc[h]['Organism'] != "YOURORGANISM":
+
 234:#    df.drop(index=h, axis=0, inplace=True)
 
 Example of uncommented lines:
+
 233: if df.loc[h]['Organism'] != "Methanoculleus sp. 7T":
+
 234:    df.drop(index=h, axis=0, inplace=True)
 
