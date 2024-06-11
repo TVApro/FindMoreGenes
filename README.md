@@ -19,21 +19,14 @@ Short script to find all required genes in all required genomes
 7. If the output format is set to 6 (in line 103), the result will be called "Genes_of_interesting_6f.xlsx", if -outfmt 2, then "Genes_of_interesting_2f.xlsx"
  
 # HOW TO USE IT?
-If your want to download all representative genomes of target genus, you should change line 12 or 14:
+### To download all representative genomes of target genus, you should change line 12 or 14:
 
 12: ncbi-genome-download -s refseq -R 'representative' -F 'genbank,protein-fasta' -g 'YOURGENUS' -o ncbi_output 'archaea/bacteria/fungi/viruses (Choose one)' 
-
 14: ncbi-genome-download -s refseq -F 'genbank,protein-fasta' -g 'YOURGENUS' -S 'YOURSTRAIN' -o ncbi_output 'archaea/bacteria/fungi/viruses (Choose one)'
 
 example in the script: 
-
-'# download all representative genomes
-
-ncbi-genome-download -s refseq -R 'representative' -F 'genbank,protein-fasta' -g 'Methanothermobacter' -o ncbi_output 'archaea'
-
-'# download target genome
-
-ncbi-genome-download -s refseq -F 'genbank,protein-fasta' -g 'Methanothermobacter' -S 'K4' -o ncbi_output 'archaea'
+	ncbi-genome-download -s refseq -R 'representative' -F 'genbank,protein-fasta' -g 'Methanothermobacter' -o ncbi_output 'archaea'
+	ncbi-genome-download -s refseq -F 'genbank,protein-fasta' -g 'Methanothermobacter' -S 'K4' -o ncbi_output 'archaea'
 
 Your must have a file with target amino-acide sequences in FASTA format (I strongly recomend using UniProt https://www.uniprot.org/ to create large unified lists).
 
