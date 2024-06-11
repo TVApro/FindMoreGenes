@@ -22,7 +22,7 @@ Short script to find all required genes in all required genomes
 ### To download all representative genomes of target genus, you should change line 12 or 14:
 
 12: ncbi-genome-download -s refseq -R 'representative' -F 'genbank,protein-fasta' -g 'YOURGENUS' -o ncbi_output 'archaea/bacteria/fungi/viruses (Choose one)' 
-14: ncbi-genome-download -s refseq -F 'genbank,protein-fasta' -g 'YOURGENUS' -S 'YOURSTRAIN' -o ncbi_output 'archaea/bacteria/fungi/viruses (Choose one)'
+14: ncbi-genome-download -s refseq -F 'genbank,protein-fasta' -g 'YOURGENUS' -S 'YOURSTRAIN' -o ncbi_output 'archaea/bacteria/fungi/viruses (Choose one)' 
 
 example in the script: 
 	ncbi-genome-download -s refseq -R 'representative' -F 'genbank,protein-fasta' -g 'Methanothermobacter' -o ncbi_output 'archaea'
