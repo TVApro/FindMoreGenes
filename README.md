@@ -32,7 +32,7 @@ Short script to find all required genes in all required genomes
 
 #### The name of the sequence file is specified when running the script with the terminal. Example:
 	bash ./FindMore.sh TARGET.fasta, where TARGET.fasta is name of file
-### File comparison.py contains an additional command that can filter all results except the target one. It is enough to uncomment these lines and keep the name of the required organism:
+### File comparison.py (128, 129) contains an additional command that can filter all results except the target one. It is enough to uncomment these lines and keep the name of the required organism:
 	if df.loc[h]['Organism'] != "YOURORGANISM":
 	   df.drop(index=h, axis=0, inplace=True)
 
