@@ -125,8 +125,8 @@ while len1 != len2:
                 pass
             try:
                 if fmtsix == True:
-                    if df.loc[h]['Organism'] != "Methanothermobacter sp. K4": # unnessesary
-                        df.drop(index=h, axis=0, inplace=True)
+                    #if df.loc[h]['Organism'] != "Methanothermobacter sp. K4": # unnessesary
+                       #df.drop(index=h, axis=0, inplace=True)
                     if df.loc[h]['Gene_number'] == df.loc[g]['Gene_number'] and df.loc[h]['Organism'] == df.loc[g]['Organism']:
                         diff3 = float(df.loc[h]['Perc. ident (%)']) - float(df.loc[g]['Perc. ident (%)'])
                         diff2 = float(df.loc[h]['evalue']) - float(df.loc[g]['evalue'])
