@@ -198,6 +198,7 @@ if fmtsix == True:
     if idperc.replace('.', '').isdigit() and float(idperc) <= 100 and float(idperc) > 0:
         print('<><><><><><><><><><><><><><><><><><><><><><><>')
         df = identity_persentage(idperc, df, 'Perc. ident (%)')
+    else:
         print('Inappropriate number. Pass')
 
     print()
