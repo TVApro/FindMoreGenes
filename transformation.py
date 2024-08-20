@@ -8,7 +8,7 @@ def fasta_for_analisys(text, G_name):
     for i in fasta_list:
         if i:
             end = i.find("\n")
-            prot_number = re.search(r'\w{2}_\d{9}.[0-9]', i[:end]).group() # to find number of protein
+            prot_number = re.search(r'\w{2}_\d{9}.[0-9]|[A-Z0-9]{8}.[0-9]', i[:end]).group() # to find number of protein
             fasta_name = '>' + G_name + '_'+prot_number
             fasta_sequence = re.sub('\n', '', i[end:])
             FASTA[fasta_name]=fasta_sequence
@@ -42,9 +42,12 @@ for j in list_gbff:
     genome_name = re.compile('SOURCE      .+')
     with open(path_j, 'r') as file:
         gbff = file.read()
-        A_name = re.search(assembly_name, gbff).group().replace('Assembly: ', '')
         G_name = re.search(genome_name, gbff).group().replace('SOURCE      ', '').replace('_', ' ')
-        del gbff
+        try:
+            A_name = re.search(assembly_name, gbff).group().replace('Assembly: ', '')
+        except:
+            A_name = re.search(r'_[A-Z0-9]+v[0-9]+_', j).group().replace('_', '') # костыли на случай, если геном придётся скачивать из GENBANK, и в нём не окажется данных об аннотации
+
     for g in list_faa:
         if A_name in g:
             path_g = os.path.join(path_faa, g)
