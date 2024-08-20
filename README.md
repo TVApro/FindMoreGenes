@@ -46,4 +46,6 @@ Short script to find all required genes in all required genomes
 
 In Linux terminal from the your folder with target sequences:
 	
-	bash ./FindMore.sh TARGET.fasta, where TARGET.fasta is name of file
+	bash ./FindMore.sh TARGET.fasta
+
+where TARGET.fasta is name of file
