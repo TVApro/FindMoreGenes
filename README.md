@@ -43,5 +43,7 @@ Short script to find all required genes in all required genomes
 
 # HOW TO START?
 ### Your must have a file with target amino-acide sequences in FASTA format (I strongly recomend using UniProt https://www.uniprot.org/ to create large unified lists).
+
 In Linux terminal from the your folder with target sequences:
+	
 	bash ./FindMore.sh TARGET.fasta, where TARGET.fasta is name of file
