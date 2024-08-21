@@ -50,9 +50,9 @@ psiblast -query $1 -db BLASTDB_ALL -qcov_hsp_perc 70.0 -evalue 0.0001 -outfmt 6 
 echo "PSIBLAST done, result in PSIBLAST-OUTPUT.TXT"
 }
 
-if [ ! -d ./BLASTDB_ALL.faa ]; then
-BLAST_DB "${1}"
-else rm BLASTDB_ALL* && rm PSIBLAST-OUTPUT.txt && BLAST_DB "${1}"
+if test -f './BLASTDB_ALL.faa'; then
+rm BLASTDB_* && rm PSIBLAST-OUTPUT.txt && BLAST_DB "${1}"
+else BLAST_DB "${1}" 
 fi
 
 python сomparison.py
