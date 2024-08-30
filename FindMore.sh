@@ -38,21 +38,37 @@ else echo 'Folder FAA_changed_names already exist'
 fi
 
 # SECOND PART
-# you may replace psiblast with the blastp
 
 function BLAST_DB() {
 cat ./FAA_changed_names/*.faa >> BLASTDB_ALL.faa
 echo 'Make ./BLASTDB_ALL.faa'
 makeblastdb -in ./BLASTDB_ALL.faa -out BLASTDB_ALL -title BLASTDB_ALL -dbtype prot
 echo 'A common database named BLASTDB_ALL has been created'
+}
+
+function PSIBLAST() {
 echo 'Start PSIBLAST'
-psiblast -query $1 -db BLASTDB_ALL -qcov_hsp_perc 70.0 -evalue 0.0001 -outfmt 6 -out PSIBLAST-OUTPUT.txt # you may change OUTFMT to 2 if you was use Uniprot to download sequences
+if test -f $1; then
+psiblast -query $1 -db BLASTDB_ALL -qcov_hsp_perc 70.0 -evalue 0.0001 -outfmt 6 -out PSIBLAST_OUTPUT
 echo "PSIBLAST done, result in PSIBLAST-OUTPUT.TXT"
+else echo "Error! File $1 doesnt exit!" && exit 404
+fi
 }
 
 if test -f './BLASTDB_ALL.faa'; then
-rm BLASTDB_* && rm PSIBLAST-OUTPUT.txt && BLAST_DB "${1}"
-else BLAST_DB "${1}" 
+rm BLASTDB_* && BLAST_DB
+else BLAST_DB
 fi
 
-python сomparison.py
+if test -f './PSIBLAST-OUTPUT.txt'; then
+rm PSIBLAST-OUTPUT.txt && PSIBLAST "${1}"
+else PSIBLAST "${1}" 
+fi
+
+split --lines=1000 --numeric-suffixes --suffix-length=3 PSIBLAST_OUTPUT PSIBLAST_OUTPUT_part_
+python сomparison.py PSIBLAST_OUTPUT
+rm PSIBLAST_OUTPUT_part_*
+
+python extract.py
+
+#muscle -in 'List_of_genes_2.fasta' -out 'MUSCLE-OUTPUT' 
