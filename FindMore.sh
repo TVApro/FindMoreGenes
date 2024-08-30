@@ -49,7 +49,7 @@ echo 'A common database named BLASTDB_ALL has been created'
 function PSIBLAST() {
 echo 'Start PSIBLAST'
 if test -f $1; then
-psiblast -query $1 -db BLASTDB_ALL -qcov_hsp_perc 70.0 -evalue 0.0001 -outfmt 6 -out PSIBLAST_OUTPUT
+psiblast -query $1 -db BLASTDB_ALL -outfmt 6 -out PSIBLAST_OUTPUT
 echo "PSIBLAST done, result in PSIBLAST-OUTPUT.TXT"
 else echo "Error! File $1 doesnt exit!" && exit 404
 fi

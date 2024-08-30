@@ -23,7 +23,7 @@ def zhest_start(i, idperc, e_val):
         
     plus = lambda num: num + 1
     gene_list = text.split('\n')
-    df = pd.DataFrame(columns=['Target genes', 'Target organisms', 'Searched genes', 'perc. ident (%)', 'length', 'mismatch', 'gapopen', 'qstart', 'qend', 'sstart', 'send', 'evalue', 'bitscore'])
+    df = pd.DataFrame(columns=['Target genes', 'Target organisms', 'Searched genes', 'perc. ident (%)', 'aln. length', 'mismatch', 'gapopen', 'qstart', 'qend', 'sstart', 'send', 'evalue', 'bitscore'])
 
     if fmtsix == True:
          for i in gene_list:
@@ -37,7 +37,7 @@ def zhest_start(i, idperc, e_val):
                             qseqid = re.search(r'\|[A-aZ-z0-9]+\|', word).group().replace('|', '')
                         if sch == 2:
                             full_info = re.search(r'([A-aZ-z0-9_\-\.\\\/]+[\(A-aZ-z0-9_\-\.\\\)]*)', word).group()
-                            number = re.search(r'REF[A-Z0-9]+|\w{2}_\d{9}.[0-9]|[A-Z0-9]{8}.[0-9]', word).group()
+                            number = re.search(r'\w{2}_\d{9}.[0-9]|[A-Z0-9]{8}.[0-9]', word).group()
                             organism = full_info.replace(number, '').replace('_', ' ') 
                         if sch == 3:
                             pident = word
@@ -70,8 +70,7 @@ def zhest_start(i, idperc, e_val):
                 drop_num += 1
         df = df.reset_index()
         df.drop("index", axis=1, inplace=True)
-        print('\|/')
-        print("%s of %s results was dropped" % (drop_num, start_df_len))
+        print("%s of %s results was dropped because of low identity persantage" % (drop_num, start_df_len))
         return df
 
     def evalue(e_val, df, Title):
@@ -86,8 +85,7 @@ def zhest_start(i, idperc, e_val):
                     drop_num += 1
         df = df.reset_index()
         df.drop("index", axis=1, inplace=True)
-        print('\|/')
-        print("%s of %s results was dropped" % (drop_num, start_df_len))
+        print("%s of %s results was dropped because of high e-value" % (drop_num, start_df_len))
         return df
 
     if idperc.replace('.', '').isdigit() and float(idperc) <= 100 and float(idperc) > 0:
@@ -146,11 +144,9 @@ def zhest_finish(df):
                 except:
                     pass
                 
-        #print('|||||||||||||||||||||||||||||||||||||||||||||')
         print('Iteration №%d is over' % num)
         len2 = len(df.index)
         print('There are %s results left of %s' % (len2, len1))
-        #print('/////////////////////////////////////////////')
         df = df.reset_index()
         df.drop("index", axis=1, inplace=True)
     #print('Job is done')
