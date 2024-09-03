@@ -60,6 +60,7 @@ def zhest_start(i, idperc, e_val):
                         if sch == 12:
                             bitscore = word
                             df.loc[len(df.index)] = [qseqid, organism, number, pident, length, mismatch, gapopen, qstart, qend, sstart, send, evalue, bitscore]                       
+
     def identity_persentage(YES, df, Title):
         drop_num = 0
         start_df_len = len(df.index)
@@ -83,9 +84,9 @@ def zhest_start(i, idperc, e_val):
                     #print("%s %s %s dropped because of high evalue (%s)" % (f, df.loc[f]['Searched genes'], df.loc[f]['Target genes'], df.loc[f][Title]))
                     df.drop(index=f, axis=0, inplace=True)
                     drop_num += 1
+        print("%s of %s results was dropped because of high e-value" % (drop_num, start_df_len))
         df = df.reset_index()
         df.drop("index", axis=1, inplace=True)
-        print("%s of %s results was dropped because of high e-value" % (drop_num, start_df_len))
         return df
 
     if idperc.replace('.', '').isdigit() and float(idperc) <= 100 and float(idperc) > 0:
@@ -93,8 +94,7 @@ def zhest_start(i, idperc, e_val):
         df = identity_persentage(idperc, df, 'perc. ident (%)')
     if e_val.isdigit() and int(e_val) >= 0:
         print('<><><><><><><><><><><><><><><><><><><><><><><>')
-        df = evalue(e_val, df, 'evalue')
-        
+        df = evalue(e_val, df, 'evalue')     
     return df
 
 def zhest_finish(df):
@@ -184,18 +184,27 @@ LISTOFNEEDED.sort()
 start = True
 for i in LISTOFNEEDED:
     if start == False:
-        df_2 = zhest_finish(zhest_start(i, idperc, e_val))
-        frames = [df, df_2]
-        print('Объединяю датафреймы')
-        df_3 = pd.concat(frames)
-        df_3 = df_3.reset_index()
-        df_3.drop("index", axis=1, inplace=True)
-        df_3.drop_duplicates(inplace=True)
-        if len(df_3.index) != 0:
-            df = zhest_finish(df_3)
+        try:
+            df_2 = zhest_finish(zhest_start(i, idperc, e_val))
+            frames = [df, df_2]
+            print('Объединяю датафреймы')
+            df_3 = pd.concat(frames)
+            df_3 = df_3.reset_index()
+            df_3.drop("index", axis=1, inplace=True)
+            df_3.drop_duplicates(inplace=True)
+            if len(df_3.index) != 0:
+                df = zhest_finish(df_3)
+        except:
+            print('Empty. Pass')
+            pass
     if start == True:
-        df = zhest_finish(zhest_start(i, idperc, e_val))
-        start = False
+        try:
+            df = zhest_finish(zhest_start(i, idperc, e_val))
+            start = False
+        except:
+            print('Empty. Pass')
+            pass
+        
 
 yes_list = ('yes', 'y', 'Yes', 'Y', 'Д', 'Да','да', 'д', '', 'YES', 'ДА')
 if YES not in yes_list:
